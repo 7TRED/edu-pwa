@@ -1,0 +1,151 @@
+/* A common style for message bubbles */
+.message {
+  max-width: 80%;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+.user-message {
+  align-self: flex-end;
+  background-color: #ba4bff;
+  color: #fff;
+}
+
+.assistant-message {
+  align-self: flex-start;
+  background-color: #fff;
+  color:  #333333;
+}
+
+.message-text {
+  text-wrap:pretty;
+  word-wrap:break-word;
+  white-space:pre-wrap;
+}
+
+/* A style for the message time */
+.message-time {
+  font-size: 12px;
+  color: #999999;
+  text-align: right;
+}
+
+/* A style for chat input box and button */
+.chat-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+.chat-input-container {
+  background-color: #fff;
+  max-width: 900px;
+  border-radius: 20px;
+}
+
+.chat-input input {
+  flex-grow: 1;
+  border : none;
+}
+
+textarea {
+  resize: none;
+  white-space: pre-wrap;
+}
+
+.chat-input button {
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  height: 24px;
+  width: 24px;
+  border-radius: 10px;
+  color: #ffffff;
+  margin-right : 10px;
+}
+
+/* A style for chat header */
+.chat-header {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+.chat-name {
+  font-family: Arial, sans-serif;
+  font-size: em(20);
+}
+
+.chat-mode {
+  font-family: Arial, sans-serif;
+  font-size: em(16);
+}
+
+
+/* A style for the chat messages container */
+.chat-container {
+  height : 78vh;
+  max-width: 1200px;
+  border-radius: 20px;
+}
+.chat-messages {
+  display: flex;
+  flex-direction: column-reverse;
+  height : 90%
+}
+
+/* A style for the chat app container */
+.chat-app {
+  display: flex;
+  flex-direction: column;
+}
+
+/* A media query that applies some styles only when screen width is less than or equal to em(600) */
+@media (max-width: em(600)) {
+  
+  .message {
+    margin: em(5);
+    padding: em(5);
+  }
+
+  .message-text,
+  .message-time{
+    font-size: em(14);
+  }
+
+  .chat-input input,
+  .chat-input button {
+    padding : em(5);
+  }
+
+  .chat-name,
+  .chat-mode {
+    font-size: em(16);
+  }
+
+
+  .chat-header {
+    grid-template-columns: auto;
+  }
+  
+}
+
+
+/* Upload preview styles */
+
+.upload-container {
+  height : 54px;
+  width: clamp(150px, 40%, 170px);
+}
+
+
+
+.file-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
