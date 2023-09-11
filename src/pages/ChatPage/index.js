@@ -6,6 +6,8 @@ import { MessagesContext } from "../../context/MessagesContext";
 import ChatInput from "../../components/ChatInput";
 
 import "./styles.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ChatPage() {
   const { messages, setMessages } = useContext(MessagesContext);
@@ -22,10 +24,16 @@ export default function ChatPage() {
   }
 
   //Function that handles the user input and sends it to the assistant
-  function handleUserInput(input) {
+  async function handleUserInput(input) {
     addMessage(input, "user");
 
     //Implement the logic to send the prompt to the assistant
+
+    const resolveAfter3Sec = new Promise((resolve) => setTimeout(resolve, 3000));
+    await toast.promise(resolveAfter3Sec, {
+      pending: "Processing",
+      error: "There was some error",
+    });
 
     const response = "Hello, this is Bing. How can I help? ";
     handleAssistantResponse({ content: response });
@@ -53,6 +61,7 @@ export default function ChatPage() {
       </div>
 
       <ChatInput onSend={handleUserInput} />
+      <ToastContainer />
     </div>
   );
 }
