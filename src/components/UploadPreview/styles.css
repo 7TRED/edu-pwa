@@ -1,0 +1,9 @@
+.upload-container {
+  height: 54px;
+  width: clamp(150px, 40%, 170px);
+}
+
+.file-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,15 @@
+.chat-header {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+@media (max-width: em(600)) {
+  .chat-name,
+  .chat-mode {
+    font-size: em(16);
+  }
+
+  .chat-header {
+    grid-template-columns: auto;
+  }
+}

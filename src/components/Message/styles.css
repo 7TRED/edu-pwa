@@ -1,0 +1,48 @@
+/* A common style for message bubbles */
+.message {
+  max-width: 80%;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+.user-message {
+  align-self: flex-end;
+  background-color: #ba4bff;
+  color: #fff;
+}
+
+.assistant-message {
+  align-self: flex-start;
+  background-color: #fff;
+  color: #333333;
+}
+
+.message-text {
+  text-wrap: pretty;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  padding: 2px;
+  border-radius: 10px;
+}
+
+/* A style for the message time */
+.message-time {
+  font-size: 12px;
+  color: #999999;
+  text-align: right;
+}
+
+@media (max-width: em(600)) {
+  .message {
+    margin: em(5);
+    padding: em(5);
+  }
+
+  .message-text,
+  .message-time {
+    font-size: em(12);
+  }
+}
