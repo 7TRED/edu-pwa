@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const botapi = axios.create({
-  baseURL: "http://localhost:7071/api/ChatBotTrigger",
+  baseURL: "/api/ChatBotTrigger",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
