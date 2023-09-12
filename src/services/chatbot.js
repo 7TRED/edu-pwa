@@ -18,7 +18,7 @@ const postBotApiRequest = async (context) => {
     },
     {
       params: {
-        code: process.env.REACT_APP_EDU_AI_API_CODE,
+        code: "h1SPW8Gs_Jh2Q77nZO7BaVQvuCCFpeXkO54NGnc0ZlygAzFuKGImwQ==",
       },
     }
   );
