@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import useIDBCache from "../hooks/useIDBCache";
+import postBotApiRequest from "../services/chatbot";
 
 export const MessagesContext = React.createContext(null);
 
@@ -27,19 +28,27 @@ export const MessagesContextProvider = ({ children }) => {
   const [messages, setMessages] = React.useState([]);
 
   const makeOpenAIChatBotRequest = async (prompt) => {
-    const promptToCache = { prompt, output: "" };
+    const promptToCache = { prompt, output: {} };
 
+    //to-do process the message
     setMessages((oldValue) => [prompt, ...oldValue]);
 
-    const response = await new Promise((resolve) =>
-      setTimeout(() => resolve("Hey, I'm Bing. How can I help?"), 3000)
-    );
+    const context = await generateContextFromCache();
+    context.push({
+      role: prompt.sender,
+      content: prompt.message.content,
+    });
+
+    console.log(context);
+    // response format is context[i]
+    const response = await postBotApiRequest(context);
+    console.log(response);
     promptToCache.output = {
       message: {
-        content: response,
+        content: response.content,
         file: null,
       },
-      sender: "assistant",
+      sender: response.role,
       time: new Date().toLocaleTimeString(),
     };
 
@@ -47,6 +56,29 @@ export const MessagesContextProvider = ({ children }) => {
 
     setMessages((oldValue) => [promptToCache.output, ...oldValue]);
   };
+
+  async function generateContextFromCache() {
+    const cache = await getCache();
+    const context = [];
+
+    if (cache.length <= 0) {
+      return context;
+    }
+
+    cache.forEach((c) => {
+      context.push({
+        role: c.output.sender,
+        content: c.output.message.content,
+      });
+
+      context.push({
+        role: c.prompt.sender,
+        content: c.prompt.message.content,
+      });
+    });
+
+    return context.reverse();
+  }
 
   useEffect(async () => {
     //do some message fetching or something

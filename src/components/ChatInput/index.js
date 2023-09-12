@@ -29,7 +29,7 @@ export default function ChatInput({ onSend }) {
 
   const handleSubmit = () => {
     console.log(input);
-    if (input || file) {
+    if (input.trim() || file) {
       onSend({
         content: input,
         file: file
