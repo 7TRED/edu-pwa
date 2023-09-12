@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import useIDBCache from "../hooks/useIDBCache";
 import postBotApiRequest from "../services/chatbot";
+import _ from "lodash";
 
 export const MessagesContext = React.createContext(null);
 
@@ -66,18 +67,21 @@ export const MessagesContextProvider = ({ children }) => {
     }
 
     cache.forEach((c) => {
-      context.push({
-        role: c.output.sender,
-        content: c.output.message.content,
-      });
-
-      context.push({
-        role: c.prompt.sender,
-        content: c.prompt.message.content,
-      });
+      if (!_.isEmpty(c.output)) {
+        context.push({
+          role: c.output.sender,
+          content: c.output.message.content,
+        });
+      }
+      if (!_.isEmpty(c.prompt)) {
+        context.push({
+          role: c.prompt.sender,
+          content: c.prompt.message.content,
+        });
+      }
     });
 
-    return context.reverse();
+    return context.reverse().slice(Math.max(0, context.length - 6));
   }
 
   useEffect(async () => {
