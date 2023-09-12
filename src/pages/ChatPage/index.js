@@ -10,54 +10,34 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function ChatPage() {
-  const { messages, setMessages } = useContext(MessagesContext);
+  const { messages, setMessages, makeOpenAIChatBotRequest } = useContext(MessagesContext);
   const [assistantName, setAssistantName] = useState("Bing");
   const [assistantMode, setAssistantMode] = useState("Balanced");
-  const messageEndRef = useRef(null);
 
   // Function that adds a new message to the state
-  function addMessage(input, sender) {
+  function createMessage(input, sender) {
     const time = new Date().toLocaleTimeString();
     const message = { message: input, sender, time };
-    setMessages((prevMessages) => [message, ...prevMessages]);
-    messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+    return message;
   }
 
   //Function that handles the user input and sends it to the assistant
   async function handleUserInput(input) {
-    addMessage(input, "user");
-
+    const message = createMessage(input, "user");
     //Implement the logic to send the prompt to the assistant
 
-    const resolveAfter3Sec = new Promise((resolve) => setTimeout(resolve, 3000));
-    await toast.promise(resolveAfter3Sec, {
+    const request = makeOpenAIChatBotRequest(message);
+    await toast.promise(request, {
       pending: "Processing",
       error: "There was some error",
     });
-
-    const response = "Hello, this is Bing. How can I help? ";
-    handleAssistantResponse({ content: response });
   }
-
-  function handleAssistantResponse(response) {
-    addMessage(response, "assistant");
-  }
-
-  const scrollToBotton = () => {
-    messageEndRef.current.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    const greeting = `Hi, I'm ${assistantName}. I'm here to chat with you in ${assistantMode} mode.`;
-    handleAssistantResponse({ content: greeting });
-  }, []);
 
   return (
     <div className="container relative h-screen flex flex-col items-center px-2 mx-auto">
       <ChatHeader name={assistantName} mode={assistantMode} />
-      <div className="chat-container container mx-auto overflow-y-scroll">
+      <div className="chat-container relative container mx-auto overflow-y-scroll scroll-auto scroll-smooth">
         <Chat messages={messages} />
-        <div ref={messageEndRef}></div>
       </div>
 
       <ChatInput onSend={handleUserInput} />
