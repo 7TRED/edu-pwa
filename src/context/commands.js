@@ -20,15 +20,15 @@ export const commandsList = {
 
 export function generateMarkdown(array) {
   let markdown = "";
-  let i = 1;
   for (let item of array) {
-    markdown += `
-    ${i}. Command : ${`${item.cmd}`}
-      - Description : ${item.description}
-      - Example : ${`${item.example}`}
-
-    `;
-    i++;
+    markdown += `- **Command**: \`${item.cmd}\``;
+    if (item.description) {
+      markdown += `\n  - **Description**: ${item.description}`;
+    }
+    if (item.example) {
+      markdown += `\n  - **Example**: \`${item.example}\``;
+    }
+    markdown += "\n";
   }
   return markdown;
 }
