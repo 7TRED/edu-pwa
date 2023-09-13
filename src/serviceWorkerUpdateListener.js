@@ -32,7 +32,7 @@ export class ServiceWorkerUpdateListener extends EventTarget {
     };
 
     // Fire the onupdatewaiting if there is already a service worker waiting
-    if (registration.waiting)
+    if (registration?.waiting)
       dispatchUpdateEvent("waiting", registration.waiting, registration);
 
     // Listen for a new service worker at ServiceWorkerRegistration.installing

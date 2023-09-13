@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import useIDBCache from "../hooks/useIDBCache";
-import postBotApiRequest from "../services/chatbot";
+import postBotApiRequest, {
+  postQAApiRequest,
+  postYTSummarizerApiRequest,
+} from "../services/chatbot";
 import _ from "lodash";
+import commands, { commandsList, generateMarkdown } from "./commands";
 
 export const TabContext = React.createContext(null);
 
@@ -32,16 +36,52 @@ export const TabContextProvider = ({ children }) => {
   }, [cacheName]);
 
   async function makeTutorBotAPIRequest(prompt) {
-    const promptToCache = { prompt, output: {} };
     console.log(prompt);
-    const context = await generateContextFromCache();
-    context.push({
-      role: prompt.sender,
-      content: prompt.message.content,
-    });
+    // check for command
+    const [command, content] = parseCommand(prompt.message.content);
 
-    const response = await postBotApiRequest(context);
+    let response = {};
+    console.log(command);
+    switch (command?.cmd) {
+      case commandsList.SUMMARIZE_YT_VIDEO:
+        response = await postYTSummarizerApiRequest({ url: content });
+        break;
 
+      case commandsList.HELP:
+        response = {
+          role: "assistant",
+          content: `## Commands \n\n${generateMarkdown(commands)}`,
+        };
+        break;
+
+      default:
+        const context = await generateContextFromCache();
+        context.push({
+          role: prompt.sender,
+          content: content,
+        });
+
+        response = await postBotApiRequest(context);
+    }
+
+    return addResponseToCache(prompt, response);
+  }
+
+  async function makeYTSummarizerBotRequest(prompt) {}
+
+  async function makeQARequest(prompt) {
+    const request = {
+      collection_name: prompt.message.collection_name,
+      query: prompt.message.content,
+    };
+
+    const response = await postQAApiRequest(request);
+
+    return addResponseToCache(prompt, response);
+  }
+
+  async function addResponseToCache(prompt, response) {
+    const promptToCache = { prompt, output: {} };
     promptToCache.output = {
       message: {
         content: response.content,
@@ -54,10 +94,6 @@ export const TabContextProvider = ({ children }) => {
     await updateCache((oldValue) => [promptToCache, ...oldValue]);
     return promptToCache;
   }
-
-  async function makeYTSummarizerBotRequest(prompt) {}
-
-  async function makeQARequest(prompt) {}
 
   async function generateContextFromCache() {
     const cache = await getCache();
@@ -83,6 +119,18 @@ export const TabContextProvider = ({ children }) => {
     });
 
     return context.reverse().slice(Math.max(0, context.length - 6));
+  }
+
+  function parseCommand(content) {
+    let cmds = commands.filter((cmd) => {
+      return content.trim().startsWith(cmd.cmd);
+    });
+    let command = null;
+    if (cmds.length > 0) {
+      command = cmds[0];
+    }
+
+    return [command, content.slice(command?.cmd.length)];
   }
 
   return (

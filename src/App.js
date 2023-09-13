@@ -11,7 +11,7 @@ function App() {
   const [serviceWorkerRegistration, setServiceWorkerRegistration] = useState(null);
   const [swListener, setSwListener] = useState({});
 
-  useEffect(async () => {
+  useEffect(() => {
     let listener = new ServiceWorkerUpdateListener();
     setSwListener(listener);
 
@@ -32,7 +32,8 @@ function App() {
       listener.addRegistration(reg);
       setServiceWorkerRegistration(reg);
     });
-    return () => listener.removeEventListener();
+
+    return () => listener.removeRegistration(serviceWorkerRegistration);
   }, []);
 
   const handleServiceWorkerUpdate = () => {

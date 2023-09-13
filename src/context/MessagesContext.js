@@ -35,25 +35,29 @@ export const MessagesContextProvider = ({ children }) => {
     setMessages((oldValue) => [response.output, ...oldValue]);
   };
 
-  useEffect(async () => {
-    //do some message fetching or something
-    let cache = await getCache();
-    if (!cache) {
-      await createCache();
-      cache = await getCache();
-    }
-    const newMessages = [];
-    cache.forEach((element) => {
-      if (element.output) {
-        newMessages.push(element.output);
+  useEffect(() => {
+    const fetchMessages = async () => {
+      //do some message fetching or something
+      let cache = await getCache();
+      if (!cache) {
+        await createCache();
+        cache = await getCache();
       }
+      const newMessages = [];
+      cache.forEach((element) => {
+        if (element.output) {
+          newMessages.push(element.output);
+        }
 
-      if (element.prompt) {
-        newMessages.push(element.prompt);
-      }
-    });
+        if (element.prompt) {
+          newMessages.push(element.prompt);
+        }
+      });
 
-    setMessages(newMessages);
+      setMessages(newMessages);
+    };
+
+    fetchMessages();
   }, [cacheName]);
 
   return (
