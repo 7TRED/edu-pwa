@@ -1,33 +1,34 @@
 const commands = [
   {
-    cmd: "$/summarize-yt",
+    cmd: "\\summarize-yt",
     description: "To summarize the youtube videos",
     example: "$/summarize-yt <yt-link>",
   },
   {
-    cmd: "$/help",
+    cmd: "\\suggestions",
     description: "To show a list of commands and what they do",
+    example: "\\suggestions",
   },
 ];
 
 export default commands;
 
 export const commandsList = {
-  SUMMARIZE_YT_VIDEO: "$/summarize-yt",
-  HELP: "$/help",
+  SUMMARIZE_YT_VIDEO: "\\summarize-yt",
+  HELP: "\\suggestions",
 };
 
 export function generateMarkdown(array) {
   let markdown = "";
+  let i = 1;
   for (let item of array) {
-    markdown += `- **Command**: \`${item.cmd}\`\n`;
-    if (item.description) {
-      markdown += `  - **Description**: ${item.description}\n`;
-    }
-    if (item.example) {
-      markdown += `  - **Example**: \`${item.example}\`\n`;
-    }
-    markdown += "\n";
+    markdown += `
+    ${i}. Command : ${`${item.cmd}`}
+      - Description : ${item.description}
+      - Example : ${`${item.example}`}
+
+    `;
+    i++;
   }
   return markdown;
 }

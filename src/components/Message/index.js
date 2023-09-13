@@ -15,9 +15,11 @@ export default function Message({ message, sender, time }) {
         style={{ borderColor: sender === "user" ? "#f7f7f7" : "#ccc" }}
       >
         {message.content && (
-          <ReactMarkdown remarkPlugins={[remarkGfm]} className="message-text mb-2">
-            {message.content}
-          </ReactMarkdown>
+          <ReactMarkdown
+            children={message.content}
+            remarkPlugins={[remarkGfm]}
+            className="message-text mb-2"
+          ></ReactMarkdown>
         )}
 
         {message.file && (
