@@ -13,27 +13,70 @@ export const TUTOR_BOT_CACHE_NAME = "edu.ai-tutor-bot-cache";
 export const YT_SUMMARIZER_BOT_CACHE_NAME = "edu.ai-yt-bot-cache";
 export const BOOK_SUMMARIZER_BOT_CACHE_NAME = "edu.ai-book-summarizer";
 
+const CURRENT_CACHE_NAME = "current_cache";
+
 export const TabContextProvider = ({ children }) => {
   const [cacheName, setCacheName] = useState(TUTOR_BOT_CACHE_NAME);
+  const [currentCache, setCurrentCache] = useState([]);
   const [apiRequestMethod, SetApiRequestMethod] = useState(() => makeTutorBotAPIRequest);
   const { getCache, createCache, clearCache, updateCache } = useIDBCache(cacheName, []);
+  const { getCache: getCurrentCacheName, updateCache: updateCacheName } = useIDBCache(
+    CURRENT_CACHE_NAME,
+    TUTOR_BOT_CACHE_NAME
+  );
 
   //as the cachename gets changed the API request method will change accordingly
   useEffect(() => {
-    switch (cacheName) {
-      case TUTOR_BOT_CACHE_NAME:
-        SetApiRequestMethod((c) => makeTutorBotAPIRequest);
-        break;
-      case YT_SUMMARIZER_BOT_CACHE_NAME:
-        SetApiRequestMethod((c) => makeYTSummarizerBotRequest);
-        break;
-      case BOOK_SUMMARIZER_BOT_CACHE_NAME:
-        SetApiRequestMethod((c) => makeQARequest);
-        break;
-      default:
-        SetApiRequestMethod((c) => makeTutorBotAPIRequest);
+    async function setUpTabContext() {
+      switch (cacheName) {
+        case TUTOR_BOT_CACHE_NAME:
+          SetApiRequestMethod((c) => makeTutorBotAPIRequest);
+          break;
+        case YT_SUMMARIZER_BOT_CACHE_NAME:
+          SetApiRequestMethod((c) => makeYTSummarizerBotRequest);
+          break;
+        case BOOK_SUMMARIZER_BOT_CACHE_NAME:
+          SetApiRequestMethod((c) => makeQARequest);
+          break;
+        default:
+          SetApiRequestMethod((c) => makeTutorBotAPIRequest);
+      }
+
+      const cache = await getCache();
+      await updateCacheName((oldCacheName) => cacheName);
+      setCurrentCache(cache);
     }
+
+    setUpTabContext();
   }, [cacheName]);
+
+  // useEffect to fetch the current cache name
+  useEffect(() => {
+    async function fetchCacheName() {
+      const name = await getCurrentCacheName();
+      setCacheName(cacheName);
+    }
+
+    fetchCacheName();
+  }, []);
+
+  async function clearCurrentCache() {
+    await clearCache();
+    const cache = await getCache();
+    setCurrentCache(cache);
+  }
+
+  async function createCurrentCache() {
+    await createCache([]);
+    const cache = await getCache();
+    setCurrentCache(cache);
+  }
+
+  async function updateCurrentCache(updaterCallback) {
+    await updateCache(updaterCallback);
+    const cache = await getCache();
+    setCurrentCache(cache);
+  }
 
   async function makeTutorBotAPIRequest(prompt) {
     console.log(prompt);
@@ -136,12 +179,13 @@ export const TabContextProvider = ({ children }) => {
   return (
     <TabContext.Provider
       value={{
+        currentCache,
         cacheName,
         setCacheName,
         getCache,
-        clearCache,
-        updateCache,
-        createCache,
+        clearCurrentCache,
+        updateCurrentCache,
+        createCurrentCache,
         apiRequestMethod,
       }}
     >

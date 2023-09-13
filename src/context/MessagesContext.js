@@ -1,6 +1,4 @@
 import React, { useContext, useEffect } from "react";
-import useIDBCache from "../hooks/useIDBCache";
-import postBotApiRequest from "../services/chatbot";
 import _ from "lodash";
 import { TabContext } from "./TabContext";
 
@@ -23,7 +21,8 @@ export const MessagesContext = React.createContext(null);
 // };
 
 export const MessagesContextProvider = ({ children }) => {
-  const { cacheName, getCache, createCache, apiRequestMethod } = useContext(TabContext);
+  const { cacheName, currentCache, getCache, createCurrentCache, apiRequestMethod } =
+    useContext(TabContext);
   const [messages, setMessages] = React.useState([]);
 
   const makeOpenAIBotRequest = async (prompt) => {
@@ -40,7 +39,7 @@ export const MessagesContextProvider = ({ children }) => {
       //do some message fetching or something
       let cache = await getCache();
       if (!cache) {
-        await createCache();
+        await createCurrentCache();
         cache = await getCache();
       }
       const newMessages = [];
@@ -58,7 +57,7 @@ export const MessagesContextProvider = ({ children }) => {
     };
 
     fetchMessages();
-  }, [cacheName]);
+  }, [cacheName, currentCache]);
 
   return (
     <MessagesContext.Provider value={{ messages, setMessages, makeOpenAIBotRequest }}>

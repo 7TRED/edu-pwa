@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import Message from "../Message";
 import "./styles.css";
+import DropDown from "../DropDown";
 
 export default function Chat({ messages }) {
   const messageEndRef = useRef(null);
