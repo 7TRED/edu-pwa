@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useRef } from "react";
+import { useState, useContext } from "react";
 
 import Chat from "../../components/Chat";
 import ChatHeader from "../../components/ChatHeader";
@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function ChatPage() {
-  const { messages, setMessages, makeOpenAIChatBotRequest } = useContext(MessagesContext);
+  const { messages, makeOpenAIBotRequest } = useContext(MessagesContext);
   const [assistantName, setAssistantName] = useState("Bing");
   const [assistantMode, setAssistantMode] = useState("Balanced");
 
@@ -26,7 +26,7 @@ export default function ChatPage() {
     const message = createMessage(input, "user");
     //Implement the logic to send the prompt to the assistant
 
-    const request = makeOpenAIChatBotRequest(message);
+    const request = makeOpenAIBotRequest(message);
     await toast.promise(request, {
       pending: "Processing",
       error: "There was some error",

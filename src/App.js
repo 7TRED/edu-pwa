@@ -4,6 +4,7 @@ import { MessagesContextProvider } from "./context/MessagesContext";
 import { ServiceWorkerUpdateListener } from "./serviceWorkerUpdateListener";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { TabContextProvider } from "./context/TabContext";
 
 function App() {
   const [isUpdateWaiting, setIsUpdateWaiting] = useState(false);
@@ -47,13 +48,15 @@ function App() {
   }
 
   return (
-    <MessagesContextProvider>
-      <div>
-        <ChatPage />
-        {isUpdateWaiting && displayToast()}
-        <ToastContainer />
-      </div>
-    </MessagesContextProvider>
+    <TabContextProvider>
+      <MessagesContextProvider>
+        <div>
+          <ChatPage />
+          {isUpdateWaiting && displayToast()}
+          <ToastContainer />
+        </div>
+      </MessagesContextProvider>
+    </TabContextProvider>
   );
 }
 

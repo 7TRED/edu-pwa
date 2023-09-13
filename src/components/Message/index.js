@@ -1,3 +1,4 @@
+import ReactMarkdown from "react-markdown";
 import UploadPreview from "../UploadPreview";
 import "./styles.css";
 
@@ -12,7 +13,9 @@ export default function Message({ message, sender, time }) {
         className="border rounded-xl p-2"
         style={{ borderColor: sender === "user" ? "#f7f7f7" : "#ccc" }}
       >
-        {message.content && <p className="message-text mb-2">{message.content}</p>}
+        {message.content && (
+          <ReactMarkdown className="message-text mb-2">{message.content}</ReactMarkdown>
+        )}
 
         {message.file && (
           <>
