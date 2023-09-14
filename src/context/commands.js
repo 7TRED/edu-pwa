@@ -21,12 +21,12 @@ export const commandsList = {
 export function generateMarkdown(array) {
   let markdown = "";
   for (let item of array) {
-    markdown += `- **Command**: \`${item.cmd}\``;
+    markdown += `- **Command**: \`${item.cmd}\`\n`;
     if (item.description) {
-      markdown += `\n  - **Description**: ${item.description}`;
+      markdown += `\t- **Description**: ${item.description}\n`;
     }
     if (item.example) {
-      markdown += `\n  - **Example**: \`${item.example}\``;
+      markdown += `\t- **Example**: \`${item.example}\``;
     }
     markdown += "\n";
   }
