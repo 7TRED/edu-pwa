@@ -1,6 +1,6 @@
 /* A common style for message bubbles */
 .message {
-  max-width: 80%;
+  max-width: 90%;
   margin: 0.75rem;
   padding: 0.75rem;
   border-radius: 0.75rem;
@@ -23,8 +23,8 @@
 .message-text {
   text-wrap: pretty;
   word-wrap: break-word;
-  white-space: pre-wrap;
   padding: 2px;
+  width: 100%;
   border-radius: 0.75rem;
 }
 

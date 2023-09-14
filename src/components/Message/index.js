@@ -11,15 +11,13 @@ export default function Message({ message, sender, time }) {
       } shadow-lg p-2`}
     >
       <div
-        className="border rounded-xl p-2"
+        className="border rounded-xl p-2 overflow-auto"
         style={{ borderColor: sender === "user" ? "#f7f7f7" : "#ccc" }}
       >
         {message.content && (
-          <p className="message-text">
-            <ReactMarkdown remarkPlugins={[remarkGfm]} className="message-text mb-2">
-              {`${message.content}`}
-            </ReactMarkdown>
-          </p>
+          <ReactMarkdown remarkPlugins={[remarkGfm]} className="markdown p-2">
+            {`${message.content}`}
+          </ReactMarkdown>
         )}
 
         {message.file && (
