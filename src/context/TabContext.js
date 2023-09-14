@@ -193,7 +193,7 @@ export const TabContextProvider = ({ children }) => {
       }
     });
 
-    return context.reverse().slice(Math.max(0, context.length - 6));
+    return context.reverse().slice(Math.max(0, context.length - 14));
   }
 
   function parseCommand(content) {
