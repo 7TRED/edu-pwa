@@ -13,7 +13,7 @@ const isValidURL = (url) => {
 function VideoPreview({ url }) {
   return (
     isValidURL(url) && (
-      <div className=" shadow-lg mt-4 z-12 p-px rounder-lg flex items-center justify-center">
+      <div className=" shadow-lg mt-3 p-2 rounder-lg flex items-center justify-center">
         <ReactPlayer controls={true} url={url} width={"26rem"} height={"14.625rem"} />
       </div>
     )
