@@ -14,7 +14,7 @@ function VideoPreview({ url }) {
   return (
     isValidURL(url) && (
       <div className=" mt-4 z-12 p-px rounder-lg shadow-md flex">
-        <ReactPlayer controls={true} url={url} width={"29rem"} height={"16.3125rem"} />
+        <ReactPlayer controls={true} url={url} width={"27rem"} height={"15.1875rem"} />
       </div>
     )
   );
