@@ -1,6 +1,9 @@
 /* A style for the chat messages container */
 .chat-container {
-  height: 78vh;
+  height: 83vh;
   max-width: 1200px;
   border-radius: 20px;
+}
+
+.dropdown-container {
 }

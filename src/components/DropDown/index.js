@@ -21,13 +21,13 @@ function DropDown({ data, label, value, onChange }) {
   }
 
   return (
-    <div className="flex flex-col w-full max-w-xs mx-auto">
+    <div className="flex flex-col max-w-xs mx-auto">
       <select
         id="select"
         value={value}
         placeholder="..."
         onChange={onChange}
-        className="px-4 py-2 border rounded-md text-gray-700 focus:outline-none focus:border-blue-500"
+        className=" overflow-auto w-full px-4 py-2 border rounded-md text-gray-700 focus:outline-none focus:border-blue-500"
       >
         {renderClassOptions()}
       </select>

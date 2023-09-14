@@ -54,10 +54,10 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="container relative h-screen flex flex-col items-center px-2 mx-auto">
+    <div className="container relative h-screen flex flex-col items-center mx-auto">
       <ChatHeader />
       {cacheName === BOOK_SUMMARIZER_BOT_CACHE_NAME && (
-        <div className="max-w-sm w-full mt-2 z-10 shadow-md flex">
+        <div className="max-w-md mt-2 z-10 shadow-md flex">
           <DropDown
             label={"Select Class"}
             value={standard}
