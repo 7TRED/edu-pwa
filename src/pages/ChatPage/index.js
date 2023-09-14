@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import DropDown from "../../components/DropDown";
 import { TabContext, BOOK_SUMMARIZER_BOT_CACHE_NAME } from "../../context/TabContext";
 import { books } from "../../dummy_data/classdata";
+import ImagePreview from "../../components/ImagePreview";
 
 function generateChapterData() {
   const data = [];
@@ -29,7 +30,7 @@ export default function ChatPage() {
   const { cacheName } = useContext(TabContext);
   const [standard, setStandard] = useState("");
   const [book, setBook] = useState("");
-  const [chapter, setChapter] = useState(1);
+  const [chapter, setChapter] = useState(0);
 
   // Function that adds a new message to the state
   function createMessage(input, sender) {
@@ -53,32 +54,52 @@ export default function ChatPage() {
     });
   }
 
+  function renderImagePreview() {
+    const classsBooks = books[standard];
+    if (classsBooks) {
+      const selectedBooks = classsBooks.filter((b) => b.value === book);
+      if (selectedBooks[0]) {
+        const selectedBook = selectedBooks[0];
+
+        if (chapter > 0) {
+          const url = selectedBook?.chapters[chapter]?.url;
+          const name = selectedBook?.chapters[chapter]?.name;
+
+          return <ImagePreview url={url} alt={name} />;
+        }
+      }
+    }
+  }
+
   return (
     <div className="container relative h-screen flex flex-col items-center mx-auto">
       <ChatHeader />
       {cacheName === BOOK_SUMMARIZER_BOT_CACHE_NAME && (
-        <div className="max-w-md mt-2 z-10 shadow-md flex">
-          <DropDown
-            label={"Class"}
-            value={standard}
-            onChange={(e) => setStandard(e.target.value)}
-            data={[{ value: "class12", displayName: "Class XII" }]}
-          />
-          <DropDown
-            data={standard ? books[standard] : []}
-            value={book}
-            onChange={(e) => setBook(e.target.value)}
-            label={"Book"}
-          />
-          <DropDown
-            data={book ? generateChapterData() : []}
-            value={chapter}
-            onChange={(e) => setChapter(e.target.value)}
-            label={"Chapter"}
-          />
-        </div>
+        <>
+          <div className="max-w-md mt-2 z-10 shadow-md flex">
+            <DropDown
+              label={"Class"}
+              value={standard}
+              onChange={(e) => setStandard(e.target.value)}
+              data={[{ value: "class12", displayName: "Class XII" }]}
+            />
+            <DropDown
+              data={standard ? books[standard] : []}
+              value={book}
+              onChange={(e) => setBook(e.target.value)}
+              label={"Book"}
+            />
+            <DropDown
+              data={book ? generateChapterData() : []}
+              value={chapter}
+              onChange={(e) => setChapter(e.target.value)}
+              label={"Chapter"}
+            />
+          </div>
+        </>
       )}
-      <div className="chat-container relative container mx-auto overflow-y-scroll scroll-auto scroll-smooth">
+      <div className="chat-container relative flex flex-col items-center container mx-auto overflow-y-scroll scroll-auto scroll-smooth">
+        {cacheName === BOOK_SUMMARIZER_BOT_CACHE_NAME && renderImagePreview()}
         <Chat messages={messages} />
       </div>
 

@@ -14,7 +14,7 @@ export default function Chat({ messages }) {
   // }, [messages.length]);
 
   return (
-    <div className="container max-h-full mx-auto">
+    <div className="container mx-auto">
       <div className="chat-messages">
         {messages.map((message, index) => {
           return <Message key={index} {...message} />;
