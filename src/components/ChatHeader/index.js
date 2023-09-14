@@ -4,6 +4,7 @@ import {
   BOOK_SUMMARIZER_BOT_CACHE_NAME,
   TUTOR_BOT_CACHE_NAME,
   TabContext,
+  YT_SUMMARIZER_BOT_CACHE_NAME,
 } from "../../context/TabContext";
 import { MdDelete } from "react-icons/md";
 
@@ -58,11 +59,20 @@ export default function ChatHeader({ name, mode }) {
           QnA
         </button>
         <button
+          onClick={(e) => {
+            e.preventDefault();
+            highlightCurrentTab(e);
+            handleTabButtonClick(YT_SUMMARIZER_BOT_CACHE_NAME);
+          }}
+          className="tab-button"
+        >
+          Youtube
+        </button>
+        <button
           onClick={handleClearButtonClick}
-          className="tab-button ml-2 flex items-center justify-evenly delete"
+          className="tab-button ml-px flex items-center justify-evenly delete"
         >
           <MdDelete className="icon h-full" />
-          Clear
         </button>
       </div>
     </div>

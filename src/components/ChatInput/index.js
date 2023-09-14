@@ -110,7 +110,7 @@ export default function ChatInput({ onSend }) {
           value={input}
           onChange={handleChange}
           onKeyDown={handleKeyPress}
-          placeholder="Type you messsage here..."
+          placeholder="Type your messsage here..."
           className="container outline-none border-0 focus:border-0 focus:outline-none"
         />
         <FileUploadButton handleFileSelect={handleFileSelect} />

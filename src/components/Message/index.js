@@ -15,7 +15,11 @@ export default function Message({ message, sender, time }) {
         style={{ borderColor: sender === "user" ? "#f7f7f7" : "#ccc" }}
       >
         {message.content && (
-          <ReactMarkdown remarkPlugins={[remarkGfm]} className="markdown px-2">
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            className={`p-2 ${sender === "user" ? "" : "prose"}`}
+            components={{ a: LinkRenderer }}
+          >
             {`${message.content}`}
           </ReactMarkdown>
         )}
@@ -42,5 +46,13 @@ export default function Message({ message, sender, time }) {
         {time}
       </div>
     </div>
+  );
+}
+
+function LinkRenderer(props) {
+  return (
+    <a href={props.href} target="_blank" rel="noreferrer">
+      {props.children}
+    </a>
   );
 }

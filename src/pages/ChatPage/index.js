@@ -9,9 +9,16 @@ import "./styles.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DropDown from "../../components/DropDown";
-import { TabContext, BOOK_SUMMARIZER_BOT_CACHE_NAME } from "../../context/TabContext";
+import {
+  TabContext,
+  BOOK_SUMMARIZER_BOT_CACHE_NAME,
+  YT_SUMMARIZER_BOT_CACHE_NAME,
+} from "../../context/TabContext";
 import { books } from "../../dummy_data/classdata";
 import ImagePreview from "../../components/ImagePreview";
+import commands, { commandsList } from "../../context/commands";
+import ReactPlayer from "react-player";
+import VideoPreview from "../../components/VideoPreview";
 
 function generateChapterData() {
   const data = [];
@@ -31,6 +38,7 @@ export default function ChatPage() {
   const [standard, setStandard] = useState("");
   const [book, setBook] = useState("");
   const [chapter, setChapter] = useState(0);
+  const [ytURL, setYtURL] = useState("");
 
   // Function that adds a new message to the state
   function createMessage(input, sender) {
@@ -53,6 +61,17 @@ export default function ChatPage() {
       error: "There was some error",
     });
   }
+
+  //Function to handle YTSummarizer Input field
+  const handleYTSummarizerInputField = async (event) => {
+    event.preventDefault();
+    const input = {
+      content: `${commandsList.SUMMARIZE_YT_VIDEO} ${ytURL}`,
+      file: null,
+    };
+
+    await handleUserInput(input);
+  };
 
   function renderImagePreview() {
     const classsBooks = books[standard];
@@ -98,8 +117,36 @@ export default function ChatPage() {
           </div>
         </>
       )}
+      {cacheName === YT_SUMMARIZER_BOT_CACHE_NAME && (
+        <>
+          <div style={{ width: "80%" }} className="max-w-xl mt-4 z-10 shadow-md flex">
+            <label htmlFor="yt-link" hidden></label>
+            <input
+              value={ytURL}
+              className="outline-none p-2 w-full"
+              placeholder="Enter your youtube video URL here..."
+              type="url"
+              id="yt-link"
+              name="yt-link"
+              onChange={(e) => setYtURL(e.target.value)}
+            />
+            {ytURL && (
+              <button className="tab-button" onClick={(e) => setYtURL("")}>
+                X
+              </button>
+            )}
+            <button
+              className="tab-button btn-primary"
+              onClick={handleYTSummarizerInputField}
+            >
+              Go
+            </button>
+          </div>
+        </>
+      )}
       <div className="chat-container relative flex flex-col items-center container mx-auto overflow-y-scroll scroll-auto scroll-smooth">
         {cacheName === BOOK_SUMMARIZER_BOT_CACHE_NAME && renderImagePreview()}
+        {cacheName === YT_SUMMARIZER_BOT_CACHE_NAME && <VideoPreview url={ytURL} />}
         <Chat messages={messages} />
       </div>
 

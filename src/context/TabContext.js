@@ -105,12 +105,43 @@ export const TabContextProvider = ({ children }) => {
         });
 
         response = await postBotApiRequest(context);
+        console.log(response);
     }
 
     return addResponseToCache(prompt, response);
   }
 
-  async function makeYTSummarizerBotRequest(prompt) {}
+  async function makeYTSummarizerBotRequest(prompt) {
+    console.log(prompt);
+    // check for command
+    const [command, content] = parseCommand(prompt.message.content);
+
+    let response = {};
+    console.log(command);
+    switch (command?.cmd) {
+      case commandsList.SUMMARIZE_YT_VIDEO:
+        response = await postYTSummarizerApiRequest({ url: content });
+        break;
+
+      case commandsList.HELP:
+        response = {
+          role: "assistant",
+          content: `## Commands \n\n${generateMarkdown(commands)}`,
+        };
+        break;
+
+      default:
+        const context = await generateContextFromCache();
+        context.push({
+          role: prompt.sender,
+          content: content,
+        });
+
+        response = await postBotApiRequest(context);
+    }
+
+    return addResponseToCache(prompt, response);
+  }
 
   async function makeQARequest(prompt) {
     const request = {
@@ -124,7 +155,8 @@ export const TabContextProvider = ({ children }) => {
   }
 
   async function addResponseToCache(prompt, response) {
-    const promptToCache = { prompt, output: {} };
+    let promptToCache = { prompt, output: {} };
+
     promptToCache.output = {
       message: {
         content: response.content,
