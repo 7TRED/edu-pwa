@@ -142,11 +142,12 @@ export default function ChatPage() {
               Go
             </button>
           </div>
+          <VideoPreview url={ytURL} />
         </>
       )}
       <div className="chat-container relative flex flex-col items-center container mx-auto overflow-y-scroll scroll-auto scroll-smooth">
         {cacheName === BOOK_SUMMARIZER_BOT_CACHE_NAME && renderImagePreview()}
-        {cacheName === YT_SUMMARIZER_BOT_CACHE_NAME && <VideoPreview url={ytURL} />}
+        {/* {cacheName === YT_SUMMARIZER_BOT_CACHE_NAME && <VideoPreview url={ytURL} />} */}
         <Chat messages={messages} />
       </div>
 
