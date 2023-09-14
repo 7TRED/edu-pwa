@@ -59,7 +59,7 @@ export default function ChatPage() {
       {cacheName === BOOK_SUMMARIZER_BOT_CACHE_NAME && (
         <div className="max-w-md mt-2 z-10 shadow-md flex">
           <DropDown
-            label={"Select Class"}
+            label={"Class"}
             value={standard}
             onChange={(e) => setStandard(e.target.value)}
             data={[{ value: "class12", displayName: "Class XII" }]}
@@ -68,13 +68,13 @@ export default function ChatPage() {
             data={standard ? books[standard] : []}
             value={book}
             onChange={(e) => setBook(e.target.value)}
-            label={"Select Book"}
+            label={"Book"}
           />
           <DropDown
             data={book ? generateChapterData() : []}
             value={chapter}
             onChange={(e) => setChapter(e.target.value)}
-            label={"Select Chapter"}
+            label={"Chapter"}
           />
         </div>
       )}

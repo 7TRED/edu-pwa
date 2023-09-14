@@ -28,14 +28,14 @@ export default function ChatHeader({ name, mode }) {
   };
 
   return (
-    <div className="chat-header w-full bg-white sticky shadow-xl z-30 rounded-md">
-      <div className="p-2 flex items-end justify-end ml-4">
+    <div className=" pt-2 pl-2 chat-header w-full bg-white sticky shadow-xl z-30 rounded-md">
+      <div className="p-2 flex items-end justify-center ml-2">
         <div className="logo-container h-full">
           <img className="logo" src="/logo.png" alt="Edu.ai" />
         </div>
         <h1 className="title ml-2">Edu.ai</h1>
       </div>
-      <div className="tabs-container container flex items-center justify-end mr-8">
+      <div className="tabs-container container flex items-center justify-end mr-3">
         <button
           ref={buttonRef}
           onClick={(e) => {
@@ -59,9 +59,9 @@ export default function ChatHeader({ name, mode }) {
         </button>
         <button
           onClick={handleClearButtonClick}
-          className="tab-button flex items-center justify-evenly delete"
+          className="tab-button ml-2 flex items-center justify-evenly delete"
         >
-          <MdDelete className="icon h-full mr-2" />
+          <MdDelete className="icon h-full" />
           Clear
         </button>
       </div>
