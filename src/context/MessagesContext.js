@@ -35,8 +35,11 @@ export const MessagesContextProvider = ({ children }) => {
 
   const makeOpenAIBotRequest = async (prompt, currentProfile) => {
     //to-do process the message
-
-    setMessages((oldValue) => (oldValue.length > 0 ? [prompt, ...oldValue] : oldValue));
+    if (cacheName === TUTOR_BOT_CACHE_NAME) {
+      setMessages((oldValue) => (oldValue.length > 0 ? [prompt, ...oldValue] : oldValue));
+    } else {
+      setMessages((oldValue) => [prompt, ...oldValue]);
+    }
 
     const response = await apiRequestMethod(prompt, currentProfile);
 
