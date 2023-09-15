@@ -120,7 +120,7 @@ export default function ChatInput({ onSend }) {
           <FileUploadButton handleFileSelect={handleFileSelect} />
         )}
         <button onClick={(e) => handleSubmit()}>
-          <BsFillSendFill className="h-full w-full rotate-45" color="#ba4bff" />
+          <BsFillSendFill className="h-full w-full rotate-45" color="#155e75" />
         </button>
       </div>
       {showFilePreview && (

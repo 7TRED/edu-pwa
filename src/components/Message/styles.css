@@ -10,7 +10,7 @@
 
 .user-message {
   align-self: flex-end;
-  background-color: #ba4bff;
+  background-color: #095369;
   color: #fff;
 }
 
@@ -30,7 +30,6 @@
 
 /* A style for the message time */
 .message-time {
-  font-size: 0.8rem;
-  color: #999999;
+  font-size: 0.7rem;
   text-align: right;
 }

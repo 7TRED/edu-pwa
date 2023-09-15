@@ -2,7 +2,10 @@ import React from "react";
 
 function SearchInputField({ value, type, onChange, onSubmit, clearButton }) {
   return (
-    <div style={{ width: "80%" }} className="max-w-xl bg-white mt-4 z-10 shadow-md flex">
+    <div
+      style={{ width: "80%" }}
+      className="max-w-xl mb-2 bg-white mt-4 z-10 shadow-md flex"
+    >
       <label htmlFor="yt-link" hidden></label>
       <input
         value={value}

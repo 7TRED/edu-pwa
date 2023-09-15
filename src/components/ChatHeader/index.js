@@ -29,7 +29,7 @@ export default function ChatHeader({ name, mode }) {
   };
 
   return (
-    <div className=" pt-2 pl-2 chat-header w-full bg-white sticky shadow-xl z-30 rounded-md">
+    <div className=" pt-2 pl-2 chat-header w-full bg-white sticky shadow-md z-30 rounded-top-md">
       <div className="p-2 flex items-end justify-center ml-2">
         <div className="logo-container h-full">
           <img className="logo" src="/logo.png" alt="Edu.ai" />

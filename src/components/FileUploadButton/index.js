@@ -3,10 +3,10 @@ import "./styles.css";
 
 const FileUploadButton = ({ handleFileSelect }) => {
   return (
-    <div className="container flex items-center justify-center w-6 h-6 p-px mr-4 border-2 rounded-full border-purple-500/50 ">
+    <div className="container flex items-center justify-center w-6 h-6 p-px mr-4 border-2 rounded-full border-cyan-800 ">
       <label htmlFor="file_input">
         <div>
-          <FaPlus className="w-full h-full" color="#ba4bff" />
+          <FaPlus className="w-full h-full" color="#155e75" />
         </div>
         <input
           onChange={handleFileSelect}

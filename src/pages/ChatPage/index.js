@@ -96,42 +96,44 @@ export default function ChatPage() {
   return (
     <div className="container relative h-screen flex flex-col items-center mx-auto">
       <ChatHeader />
-      {cacheName === BOOK_SUMMARIZER_BOT_CACHE_NAME && (
-        <>
-          <div className="max-w-md mt-2 z-10 shadow-md flex">
-            <DropDown
-              label={"Class"}
-              value={standard}
-              onChange={(e) => setStandard(e.target.value)}
-              data={[{ value: "class12", displayName: "Class XII" }]}
+      <div className="container flex z-15 flex-col items-center mx-auto rounded-lg">
+        {cacheName === BOOK_SUMMARIZER_BOT_CACHE_NAME && (
+          <>
+            <div className="max-w-md mt-2 z-10 shadow-md flex">
+              <DropDown
+                label={"Class"}
+                value={standard}
+                onChange={(e) => setStandard(e.target.value)}
+                data={[{ value: "class12", displayName: "Class XII" }]}
+              />
+              <DropDown
+                data={standard ? books[standard] : []}
+                value={book}
+                onChange={(e) => setBook(e.target.value)}
+                label={"Book"}
+              />
+              <DropDown
+                data={book ? generateChapterData() : []}
+                value={chapter}
+                onChange={(e) => setChapter(e.target.value)}
+                label={"Chapter"}
+              />
+            </div>
+          </>
+        )}
+        {cacheName === YT_SUMMARIZER_BOT_CACHE_NAME && (
+          <>
+            <SearchInputField
+              value={ytURL}
+              onChange={(e) => setYtURL(e.target.value)}
+              onSubmit={handleYTSummarizerInputField}
+              clearButton={(e) => setYtURL("")}
+              type={"url"}
             />
-            <DropDown
-              data={standard ? books[standard] : []}
-              value={book}
-              onChange={(e) => setBook(e.target.value)}
-              label={"Book"}
-            />
-            <DropDown
-              data={book ? generateChapterData() : []}
-              value={chapter}
-              onChange={(e) => setChapter(e.target.value)}
-              label={"Chapter"}
-            />
-          </div>
-        </>
-      )}
-      {cacheName === YT_SUMMARIZER_BOT_CACHE_NAME && (
-        <>
-          <SearchInputField
-            value={ytURL}
-            onChange={(e) => setYtURL(e.target.value)}
-            onSubmit={handleYTSummarizerInputField}
-            clearButton={(e) => setYtURL("")}
-            type={"url"}
-          />
-          {isMobile() && <VideoPreview url={ytURL} />}
-        </>
-      )}
+            {isMobile() && <VideoPreview url={ytURL} />}
+          </>
+        )}
+      </div>
       <div className="chat-container relative flex flex-col items-center container mx-auto overflow-y-scroll scroll-auto scroll-smooth">
         {cacheName === BOOK_SUMMARIZER_BOT_CACHE_NAME && renderImagePreview()}
         {cacheName === YT_SUMMARIZER_BOT_CACHE_NAME && !isMobile() && (

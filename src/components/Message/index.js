@@ -8,16 +8,16 @@ export default function Message({ message, sender, time }) {
     <div
       className={`message ${
         sender === "user" ? "user-message" : "assistant-message"
-      } shadow-lg p-2`}
+      } shadow-lg`}
     >
       <div
-        className="border rounded-xl p-px overflow-auto"
+        className={`${sender === "user" ? "" : "border rounded-lg p-px"} tracking-wider`}
         style={{ borderColor: sender === "user" ? "#f7f7f7" : "#ccc" }}
       >
         {message.content && (
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
-            className={`p-2 ${sender === "user" ? "" : "prose"}`}
+            className={`px-2 ${sender === "user" ? "" : "prose"}`}
             components={{ a: LinkRenderer }}
           >
             {`${message.content}`}
