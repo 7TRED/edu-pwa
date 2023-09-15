@@ -38,3 +38,7 @@
   width: 5rem;
   aspect-ratio: 1;
 }
+
+.card-action {
+  font-size: 0.8rem;
+}

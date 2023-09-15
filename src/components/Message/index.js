@@ -28,9 +28,6 @@ export default function Message({ message, sender, time, type }) {
     return (
       <div className="card flex w-full flex-col">
         <div className="card-body flex items-center justify-start p-2 ">
-          <div className="card-image m-2">
-            <img src={Logo} className="h-full max-w-auto" alt="Edu.ai" />
-          </div>
           <div className="card-content flex flex-col">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
@@ -41,16 +38,16 @@ export default function Message({ message, sender, time, type }) {
                 " ## Welcome to EduAI \n Hello, nice to meet you, I'm EduAI, happy to help you in your learning journey😃, please tell me who are you ?"
               }
             </ReactMarkdown>
-            <div className="card-actions">
+            <div className="card-actions mt-2">
               <button
                 onClick={handleStellarEducator}
-                className="px-3 py-2 border border-2 border-cyan-800 text-cyan-800 hover:bg-cyan-800 hover:text-white duration-300 m-2 rounded-md"
+                className=".card-action px-2 py-1 border border-2 border-cyan-800 text-cyan-800 hover:bg-cyan-800 hover:text-white duration-300 m-px rounded-md"
               >
                 Stellar Educator
               </button>
               <button
                 onClick={handleDigitalLearner}
-                className="px-3 py-2 border border-2 border-cyan-800 text-cyan-800 hover:bg-cyan-800 hover:text-white duration-300 m-2 rounded-md"
+                className=".card-action px-2 py-1 border border-2 border-cyan-800 text-cyan-800 hover:bg-cyan-800 hover:text-white duration-300 m-1 rounded-md"
               >
                 Digital Learner
               </button>
