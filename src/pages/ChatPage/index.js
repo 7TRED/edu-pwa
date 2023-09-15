@@ -19,6 +19,7 @@ import ImagePreview from "../../components/ImagePreview";
 import commands, { commandsList } from "../../context/commands";
 import ReactPlayer from "react-player";
 import VideoPreview from "../../components/VideoPreview";
+import useMobileDetect from "../../hooks/useMobileDetect";
 
 function generateChapterData() {
   const data = [];
@@ -35,6 +36,7 @@ function generateChapterData() {
 export default function ChatPage() {
   const { messages, makeOpenAIBotRequest } = useContext(MessagesContext);
   const { cacheName } = useContext(TabContext);
+  const { isMobile } = useMobileDetect();
   const [standard, setStandard] = useState("");
   const [book, setBook] = useState("");
   const [chapter, setChapter] = useState(0);
@@ -142,12 +144,14 @@ export default function ChatPage() {
               Go
             </button>
           </div>
-          <VideoPreview url={ytURL} />
+          {isMobile() && <VideoPreview url={ytURL} />}
         </>
       )}
       <div className="chat-container relative flex flex-col items-center container mx-auto overflow-y-scroll scroll-auto scroll-smooth">
         {cacheName === BOOK_SUMMARIZER_BOT_CACHE_NAME && renderImagePreview()}
-        {/* {cacheName === YT_SUMMARIZER_BOT_CACHE_NAME && <VideoPreview url={ytURL} />} */}
+        {cacheName === YT_SUMMARIZER_BOT_CACHE_NAME && !isMobile() && (
+          <VideoPreview url={ytURL} width={"32rem"} height={"18rem"} />
+        )}
         <Chat messages={messages} />
       </div>
 

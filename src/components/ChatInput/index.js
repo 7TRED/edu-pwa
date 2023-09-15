@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { BsFillSendFill } from "react-icons/bs";
 import FileUploadButton from "../FileUploadButton";
 import UploadPreview from "../UploadPreview";
@@ -108,6 +108,7 @@ export default function ChatInput({ onSend }) {
         <textarea
           rows={calculateRows()}
           value={input}
+          maxLength={2000}
           onChange={handleChange}
           onKeyDown={handleKeyPress}
           placeholder="Type your messsage here..."
