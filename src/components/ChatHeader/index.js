@@ -6,7 +6,7 @@ import {
   TabContext,
   YT_SUMMARIZER_BOT_CACHE_NAME,
 } from "../../context/TabContext";
-import { MdDelete } from "react-icons/md";
+import { RiChatDeleteFill } from "react-icons/ri";
 
 export default function ChatHeader({ name, mode }) {
   const { setCacheName, clearCurrentCache } = useContext(TabContext);
@@ -72,7 +72,7 @@ export default function ChatHeader({ name, mode }) {
           onClick={handleClearButtonClick}
           className="tab-button ml-px flex items-center justify-evenly delete"
         >
-          <MdDelete className="icon h-full" />
+          <RiChatDeleteFill className="icon h-full" />
         </button>
       </div>
     </div>

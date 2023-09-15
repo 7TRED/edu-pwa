@@ -11,7 +11,7 @@ const FileUploadButton = ({ handleFileSelect }) => {
         <input
           onChange={handleFileSelect}
           type="file"
-          accept=".jpg, .jpeg, .png, .gif, .bmp, .pdf, .doc, .docx"
+          accept=".pdf"
           id="file_input"
           name="file_input"
           hidden

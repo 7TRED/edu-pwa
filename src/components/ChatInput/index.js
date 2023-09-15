@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BsFillSendFill } from "react-icons/bs";
 import FileUploadButton from "../FileUploadButton";
 import UploadPreview from "../UploadPreview";
@@ -7,9 +7,11 @@ import _ from "lodash";
 import useMobileDetect from "../../hooks/useMobileDetect";
 
 import "./styles.css";
+import { BOOK_SUMMARIZER_BOT_CACHE_NAME, TabContext } from "../../context/TabContext";
 
 export default function ChatInput({ onSend }) {
   const { isMobile } = useMobileDetect();
+  const { cacheName } = useContext(TabContext);
 
   const [input, setInput] = React.useState("");
   const [file, setFile] = React.useState(null);
@@ -114,7 +116,9 @@ export default function ChatInput({ onSend }) {
           placeholder="Type your messsage here..."
           className="container outline-none border-0 focus:border-0 focus:outline-none"
         />
-        <FileUploadButton handleFileSelect={handleFileSelect} />
+        {cacheName === BOOK_SUMMARIZER_BOT_CACHE_NAME && (
+          <FileUploadButton handleFileSelect={handleFileSelect} />
+        )}
         <button onClick={(e) => handleSubmit()}>
           <BsFillSendFill className="h-full w-full rotate-45" color="#ba4bff" />
         </button>

@@ -20,6 +20,7 @@ import commands, { commandsList } from "../../context/commands";
 import ReactPlayer from "react-player";
 import VideoPreview from "../../components/VideoPreview";
 import useMobileDetect from "../../hooks/useMobileDetect";
+import SearchInputField from "../../components/SearchInputField";
 
 function generateChapterData() {
   const data = [];
@@ -121,29 +122,13 @@ export default function ChatPage() {
       )}
       {cacheName === YT_SUMMARIZER_BOT_CACHE_NAME && (
         <>
-          <div style={{ width: "80%" }} className="max-w-xl mt-4 z-10 shadow-md flex">
-            <label htmlFor="yt-link" hidden></label>
-            <input
-              value={ytURL}
-              className="outline-none p-2 w-full"
-              placeholder="Enter your youtube video URL here..."
-              type="url"
-              id="yt-link"
-              name="yt-link"
-              onChange={(e) => setYtURL(e.target.value)}
-            />
-            {ytURL && (
-              <button className="tab-button" onClick={(e) => setYtURL("")}>
-                X
-              </button>
-            )}
-            <button
-              className="tab-button btn-primary"
-              onClick={handleYTSummarizerInputField}
-            >
-              Go
-            </button>
-          </div>
+          <SearchInputField
+            value={ytURL}
+            onChange={(e) => setYtURL(e.target.value)}
+            onSubmit={handleYTSummarizerInputField}
+            clearButton={(e) => setYtURL("")}
+            type={"url"}
+          />
           {isMobile() && <VideoPreview url={ytURL} />}
         </>
       )}
