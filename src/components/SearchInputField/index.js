@@ -1,10 +1,15 @@
 import React from "react";
+import useMobileDetect from "../../hooks/useMobileDetect";
 
 function SearchInputField({ value, type, onChange, onSubmit, clearButton }) {
+  const { isMobile } = useMobileDetect();
   return (
     <div
       style={{ width: "80%" }}
-      className="max-w-xl mb-2 bg-white mt-4 z-10 shadow-md flex"
+      className={
+        "max-w-xl  bg-white mt-4 z-10 shadow-md flex " +
+        `${isMobile() ? "mb-px" : "mb-2"}`
+      }
     >
       <label htmlFor="yt-link" hidden></label>
       <input

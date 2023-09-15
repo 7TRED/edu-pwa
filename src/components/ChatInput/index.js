@@ -105,7 +105,7 @@ export default function ChatInput({ onSend }) {
   };
 
   return (
-    <div className="chat-input-container container flex flex-col shadow-md mt-8 mb-2">
+    <div className="chat-input-container mx-px container flex flex-col shadow-md mt-8 mb-2">
       <div className="chat-input container m-1 flex-start">
         <textarea
           rows={calculateRows()}
