@@ -2,8 +2,65 @@ import ReactMarkdown from "react-markdown";
 import UploadPreview from "../UploadPreview";
 import "./styles.css";
 import remarkGfm from "remark-gfm";
+import Logo from "../../images/logo.png";
+import { useContext } from "react";
+import { MessagesContext } from "../../context/MessagesContext";
+import { toast } from "react-toastify";
 
-export default function Message({ message, sender, time }) {
+export default function Message({ message, sender, time, type }) {
+  const { changeProfile } = useContext(MessagesContext);
+
+  const handleStellarEducator = async (e) => {
+    const newProfile = "educator";
+    await toast.promise(changeProfile(newProfile), {
+      pending: "Welcome 😃",
+    });
+  };
+
+  const handleDigitalLearner = async (e) => {
+    const newProfile = "learner";
+    await toast.promise(changeProfile(newProfile), {
+      pending: "Learning begins 😃",
+    });
+  };
+
+  function renderWelcomeMessage() {
+    return (
+      <div className="card flex w-full flex-col">
+        <div className="card-body flex items-center justify-start p-2 ">
+          <div className="card-image m-2">
+            <img src={Logo} className="h-full max-w-auto" alt="Edu.ai" />
+          </div>
+          <div className="card-content flex flex-col">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              className={`px-2 prose`}
+              components={{ a: LinkRenderer }}
+            >
+              {
+                " ## Welcome to EduAI \n Hello, nice to meet you, I'm EduAI, happy to help you in your learning journey😃, please tell me who are you ?"
+              }
+            </ReactMarkdown>
+            <div className="card-actions">
+              <button
+                onClick={handleStellarEducator}
+                className="px-3 py-2 border border-2 border-cyan-800 text-cyan-800 hover:bg-cyan-800 hover:text-white duration-300 m-2 rounded-md"
+              >
+                Stellar Educator
+              </button>
+              <button
+                onClick={handleDigitalLearner}
+                className="px-3 py-2 border border-2 border-cyan-800 text-cyan-800 hover:bg-cyan-800 hover:text-white duration-300 m-2 rounded-md"
+              >
+                Digital Learner
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       className={`message ${
@@ -14,7 +71,8 @@ export default function Message({ message, sender, time }) {
         className={`${sender === "user" ? "" : "border rounded-lg p-px"} tracking-wider`}
         style={{ borderColor: sender === "user" ? "#f7f7f7" : "#ccc" }}
       >
-        {message.content && (
+        {type === "welcome" && renderWelcomeMessage()}
+        {message && message.content && (
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             className={`px-2 ${sender === "user" ? "" : "prose"}`}
@@ -24,7 +82,7 @@ export default function Message({ message, sender, time }) {
           </ReactMarkdown>
         )}
 
-        {message.file && (
+        {message && message.file && (
           <>
             <hr />
             <div className="container w-full p-2 flex">

@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef } from "react";
 import Message from "../Message";
 import "./styles.css";
 import DropDown from "../DropDown";
-import { TabContext } from "../../context/TabContext";
+import { TUTOR_BOT_CACHE_NAME, TabContext } from "../../context/TabContext";
 
 export default function Chat({ messages }) {
   const { cacheName } = useContext(TabContext);
@@ -19,6 +19,13 @@ export default function Chat({ messages }) {
     <div className="container w-full mx-auto">
       <div className="chat-messages">
         <div ref={messageEndRef} />
+        {cacheName === TUTOR_BOT_CACHE_NAME && messages.length <= 0 && (
+          <Message
+            type={"welcome"}
+            sender={"assistant"}
+            time={new Date().toLocaleTimeString()}
+          />
+        )}
         {messages.map((message, index) => {
           return <Message key={index} {...message} />;
         })}

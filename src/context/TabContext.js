@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import useIDBCache from "../hooks/useIDBCache";
 import postBotApiRequest, {
   postQAApiRequest,
+  postTeacherBotApiRequest,
   postYTSummarizerApiRequest,
 } from "../services/chatbot";
 import _ from "lodash";
@@ -78,7 +79,7 @@ export const TabContextProvider = ({ children }) => {
     setCurrentCache(cache);
   }
 
-  async function makeTutorBotAPIRequest(prompt) {
+  async function makeTutorBotAPIRequest(prompt, profile = "learner") {
     console.log(prompt);
     // check for command
     const [command, content] = parseCommand(prompt.message.content);
@@ -104,7 +105,13 @@ export const TabContextProvider = ({ children }) => {
           content: content,
         });
 
-        response = await postBotApiRequest(context);
+        console.log(profile);
+
+        if (profile === "learner") {
+          response = await postBotApiRequest(context);
+        } else {
+          response = await postTeacherBotApiRequest(context);
+        }
         console.log(response);
     }
 
@@ -172,11 +179,13 @@ export const TabContextProvider = ({ children }) => {
 
   async function generateContextFromCache() {
     const cache = await getCache();
-    const context = [];
+    let context = [];
 
     if (cache.length <= 0) {
       return context;
     }
+
+    let profilePrompt = null;
 
     cache.forEach((c) => {
       if (!_.isEmpty(c.output)) {
@@ -186,14 +195,24 @@ export const TabContextProvider = ({ children }) => {
         });
       }
       if (!_.isEmpty(c.prompt)) {
-        context.push({
-          role: c.prompt.sender,
-          content: c.prompt.message.content,
-        });
+        if (Object.keys(c.prompt).includes("type") && c.prompt.type === "profile") {
+          profilePrompt = c.prompt;
+        } else
+          context.push({
+            role: c.prompt.sender,
+            content: c.prompt.message.content,
+          });
       }
     });
 
-    return context.reverse().slice(Math.max(0, context.length - 14));
+    context = context.reverse().slice(Math.max(0, context.length - 14));
+
+    return profilePrompt
+      ? [
+          { role: profilePrompt.sender, content: profilePrompt.message.content },
+          ...context,
+        ]
+      : context;
   }
 
   function parseCommand(content) {

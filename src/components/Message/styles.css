@@ -33,3 +33,8 @@
   font-size: 0.7rem;
   text-align: right;
 }
+
+.card-image {
+  width: 5rem;
+  aspect-ratio: 1;
+}

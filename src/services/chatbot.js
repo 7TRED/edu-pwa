@@ -12,6 +12,15 @@ const botapi = axios.create({
   },
 });
 
+export const postTeacherBotApiRequest = async (context) => {
+  console.log(context);
+  const response = await botapi.post("/ChatBotTeacherTrigger", {
+    context,
+  });
+
+  return response.data;
+};
+
 const postBotApiRequest = async (context) => {
   console.log(context);
   const response = await botapi.post("/ChatBotTrigger", {

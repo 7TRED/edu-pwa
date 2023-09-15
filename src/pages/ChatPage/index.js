@@ -35,7 +35,7 @@ function generateChapterData() {
 }
 
 export default function ChatPage() {
-  const { messages, makeOpenAIBotRequest } = useContext(MessagesContext);
+  const { messages, makeOpenAIBotRequest, profile } = useContext(MessagesContext);
   const { cacheName } = useContext(TabContext);
   const { isMobile } = useMobileDetect();
   const [standard, setStandard] = useState("");
@@ -58,7 +58,7 @@ export default function ChatPage() {
     const message = createMessage(input, "user");
     //Implement the logic to send the prompt to the assistant
 
-    const request = makeOpenAIBotRequest(message);
+    const request = makeOpenAIBotRequest(message, profile);
     await toast.promise(request, {
       pending: "Processing",
       error: "There was some error",
