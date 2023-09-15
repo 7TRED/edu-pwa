@@ -90,7 +90,7 @@ export const MessagesContextProvider = ({ children }) => {
         }
       });
 
-      if (cacheName === TUTOR_BOT_CACHE_NAME && newMessages.length <= 0) {
+      if (cacheName === TUTOR_BOT_CACHE_NAME) {
         if (newMessages.length <= 0) {
           let cachedProfile = await getProfileCache();
           if (!cachedProfile) {
