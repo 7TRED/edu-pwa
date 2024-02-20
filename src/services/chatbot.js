@@ -8,7 +8,7 @@ const botapi = axios.create({
     "Access-Control-Allow-Origin": "*", // whatever you want
   },
   params: {
-    code: "LLtLsdi3fk-trJJYeAFQdu-MLnjZDjyTk1BlU2cYBCihAzFu9RLKzg==",
+    code: "F5ii8q1CEB9PoqnOhE1SxeuYFl8KIdC_q_BeinZdpixhAzFuAENjrQ==",
   },
 });
 
