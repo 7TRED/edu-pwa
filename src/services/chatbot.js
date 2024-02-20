@@ -1,18 +1,17 @@
 import axios from "axios";
 
 const botapi = axios.create({
-  baseURL: "https://eduai.azurewebsites.net/api",
+  baseURL: "https://eduaiapi.azurewebsites.net/api",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*", // whatever you want
   },
   params: {
-    code: "h1SPW8Gs_Jh2Q77nZO7BaVQvuCCFpeXkO54NGnc0ZlygAzFuKGImwQ==",
+    code: "LLtLsdi3fk-trJJYeAFQdu-MLnjZDjyTk1BlU2cYBCihAzFu9RLKzg==",
   },
 });
 
-// comment
 export const postTeacherBotApiRequest = async (context) => {
   console.log(context);
   const response = await botapi.post("/ChatBotTeacherTrigger", {
